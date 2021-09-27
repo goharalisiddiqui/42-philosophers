@@ -6,7 +6,7 @@
 /*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 20:04:08 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/26 20:21:00 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/26 22:08:45 by gohar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,17 @@ int		ft_isnum(char *str)
 		str++;
 	}
 	return (1);
+}
+
+int	ft_strlen(char *str)
+{
+	int	size;
+
+	size = 0;
+	while (*str)
+	{
+		size++;
+		str++;
+	}
+	return (size);
 }

@@ -6,7 +6,7 @@
 /*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 17:31:26 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/26 19:31:57 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/26 22:38:06 by gohar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ void	*philosopher(void *arg)
 int	main(int argc, char **argv)
 {
 	pthread_t th[10];
+	t_philo	data;
 	int i;
 
-	
+	if (ph_argcheck(argc, argv, &data))
+		return (1);
+	printf("Nphils: %ld, die: %ld, eat: %ld, sleep: %ld\n", data.nphils, data.die, data.eat, data.sleep);
+	return (0);
 	pthread_mutex_init(&mutex, NULL);
 	i = 0;
 	while(i < 10)
