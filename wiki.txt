@@ -1,0 +1,88 @@
+https://en.wikipedia.org/wiki/Dining_philosophers_problem
+https://www.youtube.com/watch?v=FY9livorrJI&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2&index=3
+https://github.com/nesvoboda/socrates
+https://www.notion.so/philosophers-VM-c60be9c836084edfbcd9c07e29b429c4
+https://github.com/cacharle/philosophers_test
+https://github.com/newlinuxbot/Philosphers-42Project-Tester
+memset				#include <string.h>											void *memset(void *b, int c, size_t len);								
+The memset() function writes len bytes of value c (converted to an unsigned char) to the string b.
+printf				#include <stdio.h>											int	printf(cont char *str, …)										
+The function printf produces specific output according to a format specifier.
+malloc				#include <stdlib.h>											void *malloc(size_t size);											
+allocate memory with a given size on the heap.																
+free					#include <stdlib.h>											void free(void *ptr);												
+free previously allocated memory.																
+write				#include <unistd.h>											ssize_t write(int fildes, const void *buf, size_t nbyte);					
+write() attempts to write nbyte of data to the object referenced by the descriptor fildes from the buffer pointed to by buf
+usleep				#include <unistd.h>											int usleep(useconds_t microseconds);							
+The usleep() function suspends execution of the calling thread until either microseconds
+microseconds have elapsed or a signal is delivered to the thread and its action is to invoke a
+signal-catching function or to terminate the process. System activity or limitations may
+lengthen the sleep by an indeterminate amount.
+This function is implemented using nanosleep(2) by pausing for microseconds microseconds or
+until a signal occurs. Consequently, in this implementation, sleeping has no effect on the
+state of process timers, and there is no special handling for SIGALRM. Also, this implementation 
+does not put a limit on the value of microseconds (other than that limited by the size of
+the useconds_t type); some other platforms require it to be less than one million.
+The usleep() function returns the value 0 if successful; otherwise the value -1 is returned
+gettimeofday			#include <sys/time.h>											int gettimeofday(struct timeval *restrict tp, void *restrict tzp);		
+The system's notion of the current Greenwich time and the current time zone is obtained with the gettimeofday() call. 
+struct timezone {
+       int   tz_minuteswest; /* of Greenwich */
+       int   tz_dsttime;   /* type of dst correction to apply */
+   };
+long get_time(void) 
+{ 
+struct timeval 	tp;
+long 			milliseconds; 
+gettimeofday(&tp, NULL); 
+milliseconds = tp.tv_sec * 1000; 
+milliseconds += tp.tv_usec / 1000; 
+return (milliseconds); 
+}
+https://www.notion.so/philosophers-VM-c60be9c836084edfbcd9c07e29b429c4 
+https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/
+pthread_create		#include <pthread.h>		! compile with -pthread or -lpthread !	int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
+Threading is a separate set of code execution which runs alongside your main thread. 
+The pthread_create() function is used to create a new thread, with attributes specified by attr, within a process. If attr is NULL, the
+default attributes are used. If the attributes specified by attr are modified later, the thread's attributes are not affected. Upon successful 
+completion pthread_create() will store the ID of the created thread in the location specified by thread.
+white_check_mark
+eyes
+heart
+
+
+
+
+
+5:02
+thread: pointer to an unsigned integer value that returns the thread id of the thread created.
+attr: pointer to a structure that is used to define thread attributes like detached state, scheduling policy, stack address, etc. Set to NULL for default thread attributes.
+start_routine: pointer to a subroutine that is executed by the thread. The return type and parameter type of the subroutine must be of type void *. The function has a single attribute but if multiple values need to be passed to the function, a struct must be used.
+arg: pointer to void that contains the arguments to the function defined in the earlier argument
+pthread_t ptid;
+Threads are sharing memory. Threads share file handlers. the security context and in general system resources are shared.
+youtube.com/watch?v=nVESQQg-Oiw  
+geeksforgeeks.org/thread-functions-in-c-c/ 
+pthread_detach			#include <pthread.h>										int pthread_detach(pthread_t thread);
+Used to detach a thread. A detached thread does not require a thread to join on terminating. The resources of the thread are automatically released after terminating if the thread is detached.
+This method accepts a mandatory parameter thread which is the thread id of the thread that must be detached.
+pthread_join				#include <pthread.h>										int pthread_join(pthread_t thread, void **value_ptr);				
+Used to wait for the termination of a thread.
+th: thread id of the thread for which the current thread waits.
+thread_return: pointer to the location where the exit status of the thread mentioned in th is stored.
+pthread_mutex_init		#include <pthread.h>										int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+The pthread_mutex_init() function creates a new mutex, with attributes specified with attr. If attr is NULL the default attributes are used.
+If successful, pthread_mutex_init() will return zero and put the new mutex id into mutex, otherwise an error number will be returned to indicate the error.
+pthread_mutex_t mutex;
+pthread_mutex_destroy	#include <pthread.h>										int pthread_mutex_destroy(pthread_mutex_t *mutex);
+The pthread_mutex_destroy() function frees the resources allocated for mutex.
+If successful, pthread_mutex_destroy() will return zero, otherwise an error number will be returned to indicate the error.
+pthread_mutex_lock		#include <pthread.h>										int pthread_mutex_lock(pthread_mutex_t *mutex);
+The pthread_mutex_lock() function locks mutex. If the mutex is already locked, the calling thread will block until the mutex becomes available.
+If successful, pthread_mutex_lock() will return zero, otherwise an error number will be returned to indicate the error.
+pthread_mutex_unlock 		#include <pthread.h>										int pthread_mutex_unlock(pthread_mutex_t *mutex);
+If the current thread holds the lock on mutex, then the pthread_mutex_unlock() function unlocks mutex.
+Calling pthread_mutex_unlock() with a mutex that the calling thread does not hold will result in undefined behavior.
+If successful, pthread_mutex_unlock() will return zero, otherwise an error number will be returned to indicate the error.
+The pthread_mutex_unlock() function will fail if the value specified by mutex is invalid or the current thread does not hold a lock on mutex.
