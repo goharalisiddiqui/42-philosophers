@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_message.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 20:46:19 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/28 21:54:20 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/29 16:45:53 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	display_message(t_menu *menu, int type)
 
 	pthread_mutex_lock(menu->print_mutex);
 	get_currtime(&currtime);
-	ft_putnbr_fd(currtime - menu->info.epoch, STDOUT_FILENO);
-	write(1, "\t", 1);
+	//printf("ctime=%ld\n", currtime);
+	ft_putnbr_fd((currtime - *(menu->info.epoch))/1000, STDOUT_FILENO);
+	write(1, " ", 1);
 	ft_putnbr_fd(menu->nphil, STDOUT_FILENO);
 	write(1, get_message(type), ft_strlen(get_message(type)));
 	if (type != TYPE_DIE)

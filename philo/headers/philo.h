@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 13:22:57 by edavid            #+#    #+#             */
-/*   Updated: 2021/09/28 21:42:46 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/29 15:50:40 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_philo
 	long	eat;
 	long	sleep;
 	long	appetite;
-	long	epoch;
+	long	*epoch;
 }	t_philo;
 
 typedef struct s_menu
@@ -62,7 +62,7 @@ typedef struct s_menu
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*print_mutex;
 	enum e_handedness	hand;
-	suseconds_t			lasteat;
+	long				lasteat;
 	t_philo				info;
 }	t_menu;
 
@@ -85,9 +85,10 @@ void	ft_putnbr_fd(long n, int fd);
 
 // time_funcs.c
 void	myusleep(long usec);
-int		check_pulse(suseconds_t lasteat, long die);
+int		check_pulse(long lasteat, long die);
 int		wake_philo(t_menu *menu);
-int		get_currtime(suseconds_t *time);
+int		get_currtime(long *time);
+void	mysleep(long msec);
 
 // ft_atoil.c
 long	ft_atol(char *str);

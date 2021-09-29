@@ -3,56 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   time_funcs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 19:41:24 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/28 22:00:24 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/29 16:44:32 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philo.h"
 
-int	get_currtime(suseconds_t *time)
+int	get_currtime(long *time)
 {
 	struct timeval temp;
 
 	if (gettimeofday(&temp, NULL))
 		return (1);
 	*time = temp.tv_usec;
+	*time += (temp.tv_sec * 1000000);
 	return (0);
 }
 
 int	wake_philo(t_menu *menu)
 {
-	struct timeval temp;
-
-	if (gettimeofday(&temp, NULL))
+	if (get_currtime(&(menu->lasteat)))
 		return (1);
-	menu->lasteat = temp.tv_usec;
 	return (0);
 }
 
-int	check_pulse(suseconds_t lasteat, long die)
+int	check_pulse(long lasteat, long die)
 {
-	struct timeval temp;
+	long	temp;
 
-	if (gettimeofday(&temp, NULL))
-		return (1);
-	if ((temp.tv_usec - lasteat) > die)
-		return (1);
-	return (0);
+	get_currtime(&temp);
+	if ((temp - lasteat) > (die * 1000))
+		return (0);
+	return (1);
 }
 
 void myusleep(long usec)
 {
-	suseconds_t start;
-	suseconds_t end;
+	long start;
+	long end;
 
 	get_currtime(&start);
 	while (1)
 	{
-		get_currtime(&end);
-		if (end - start >= usec)
-			break;
+		usleep(10);
+	 	get_currtime(&end);
+	 	if ((end - start) >= usec)
+	 		break;
 	}
+}
+
+void mysleep(long msec)
+{
+	myusleep(msec * 1000);
 }
