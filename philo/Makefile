@@ -4,7 +4,8 @@ SDIR = sources
 ODIR = objects
 HDIR = headers
 NAME = philo
-SRC = ph_main.c ph_argcheck.c ph_utils1.c ft_atol.c list_utils.c
+SRC = ph_main.c ph_argcheck.c ph_utils1.c ft_atol.c list_utils.c time_funcs.c \
+		display_message.c
 
 $(NAME): $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
 	$(CC) $(CFLAGS) -o $@ $(foreach src,$(SRC:.c=.o),$(ODIR)/$(src))

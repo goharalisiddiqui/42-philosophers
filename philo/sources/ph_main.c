@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ph_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 17:31:26 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/27 16:46:08 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/28 22:02:18 by gohar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,47 @@ int 	ft_err(char *str)
 	return (1);
 }
 
-int mails = 0;
-pthread_mutex_t	mutex;
-
 void	*philosopher(void *menu)
 {
-	int i;
+	t_menu *m;
+	long	temp;
+	long	i;
 
 	i = 0;
-	while(i < 1000000)
+	m = (t_menu *)menu;
+	if (m->hand == left)
+		myusleep(50);
+	while(m->info.appetite >= 0)
 	{
-		pthread_mutex_lock(&mutex);
-		mails++;
-		pthread_mutex_unlock(&mutex);
-		i++;
+		if (m->hand == left)
+			pthread_mutex_lock(m->left_fork);
+		else
+			pthread_mutex_lock(m->right_fork);
+		display_message(m, TYPE_FORK);
+		if (m->hand == left)
+			pthread_mutex_lock(m->right_fork);
+		else
+			pthread_mutex_lock(m->left_fork);
+		display_message(m, TYPE_FORK);
+		get_currtime(&(m->lasteat));
+		myusleep(m->info.eat);
+		if (m->info.appetite > 0 && ++i == m->info.appetite)
+		{
+			display_message(menu, TYPE_OVER);
+			break;
+		}
+		display_message(m, TYPE_SLEEP);
+		myusleep(m->info.sleep);
+		display_message(m, TYPE_THINK);
+		get_currtime(&temp);
+		temp = temp - m->lasteat - m->info.die - 5;
+		if (temp > 0 && m->hand == left)
+			myusleep(temp);
 	}
+	while(1)
+		myusleep(INT_MAX);
 }
+
 
 pthread_mutex_t	*make_fork(void)
 {
@@ -53,6 +78,7 @@ t_menu	*prepare_menu(t_philo data, int i, pthread_mutex_t *pmutex, t_list *menul
 	
 	menu = malloc(sizeof(t_menu));
 	menu->info = data;
+	menu->nphil = i;
 	if (right_fork == NULL)
 		right_fork = make_fork();
 	menu->right_fork = right_fork;
@@ -65,27 +91,6 @@ t_menu	*prepare_menu(t_philo data, int i, pthread_mutex_t *pmutex, t_list *menul
 		menu->hand = left;
 	else
 		menu->hand = right;	
-}
-
-int	wake_philo(t_menu *menu)
-{
-	struct timeval temp;
-
-	if (gettimeofday(&temp, NULL))
-		return (1);
-	menu->lasteat = temp.tv_usec;
-	return (0);
-}
-
-int	check_pulse(suseconds_t lasteat, long die)
-{
-	struct timeval temp;
-
-	if (gettimeofday(&temp, NULL))
-		return (1);
-	if (temp.tv_usec - lasteat > die)
-		return (1);
-	return (0);
 }
 
 void	destroy_menu(t_menu *menu)
@@ -133,9 +138,10 @@ int	main(int argc, char **argv)
 	if (ph_argcheck(argc, argv, &data))
 		return (1);
 	printf("Nphils: %ld, die: %ld, eat: %ld, sleep: %ld\n", data.nphils, data.die, data.eat, data.sleep);
-	return (0);
-	pmutex = make_fork;
+	pmutex = make_fork();
 	i = 0;
+	menulist = NULL;
+	get_currtime(&(data.epoch));
 	while(i < data.nphils)
 	{
 		menu = prepare_menu(data, i + 1, pmutex, menulist);
@@ -147,12 +153,17 @@ int	main(int argc, char **argv)
 		pthread_detach(temp);
 		i++;
 	}
+	// return (0);
 	ft_lstlast(menulist)->next = menulist; // joining the list into a circle
 	while(1) //checking for dead philosophers
 	{
-		usleep(1);
+		myusleep(5);
 		if (!check_pulse(((t_menu *)menulist->content)->lasteat, data.die))
+		{
+			if (data.appetite == 0)
+				display_message((t_menu *)menulist->content, TYPE_DIE);
 			break ;
+		}
 	}
 	while (data.appetite != 0) // when number of max meals is given
 	{

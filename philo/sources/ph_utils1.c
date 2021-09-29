@@ -6,7 +6,7 @@
 /*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 20:04:08 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/26 22:08:45 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/28 21:11:23 by gohar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,28 @@ int	ft_strlen(char *str)
 		str++;
 	}
 	return (size);
+}
+
+void	ft_putnbr_fd(long n, int fd)
+{
+	long		i;
+
+	i = 1;
+	if (n == LONG_MIN)
+	{
+		ft_putstr_fd("-9223372036854775807", fd);
+		return ;
+	}
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		n *= -1;
+	}
+	if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
+	else
+		ft_putchar_fd(n + '0', fd);
 }

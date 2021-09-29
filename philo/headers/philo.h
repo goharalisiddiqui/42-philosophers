@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 13:22:57 by edavid            #+#    #+#             */
-/*   Updated: 2021/09/27 16:13:19 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/28 21:42:46 by gohar            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+
+// Macros
+# define TYPE_DIE	0
+# define TYPE_EAT 	1
+# define TYPE_SLEEP 2
+# define TYPE_FORK	3
+# define TYPE_THINK	4
+# define TYPE_OVER	5
 
 // enums and unions
 enum e_handedness
@@ -39,15 +47,17 @@ typedef struct s_list
 
 typedef struct s_philo
 {
-	long	nphils;		
+	long	nphils;	
 	long	die;
 	long	eat;
 	long	sleep;
 	long	appetite;
+	long	epoch;
 }	t_philo;
 
 typedef struct s_menu
 {
+	long				nphil;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*print_mutex;
@@ -71,6 +81,13 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 int		ft_isnum(char *str);
 int		ft_strlen(char *str);
+void	ft_putnbr_fd(long n, int fd);
+
+// time_funcs.c
+void	myusleep(long usec);
+int		check_pulse(suseconds_t lasteat, long die);
+int		wake_philo(t_menu *menu);
+int		get_currtime(suseconds_t *time);
 
 // ft_atoil.c
 long	ft_atol(char *str);
@@ -84,6 +101,9 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
+
+// display_message.c
+void	display_message(t_menu *menu, int type);
 
 
 #endif
