@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 20:59:52 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/29 21:04:09 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 21:11:40 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_menu	*prepare_menu(t_philo data, int i, pthread_mutex_t *pm, t_list *ml)
 {
 	t_menu					*menu;
 	static pthread_mutex_t	*right_fork = NULL;
-	
+
 	menu = malloc(sizeof(t_menu));
 	menu->info = data;
 	menu->nphil = i;
@@ -48,17 +48,17 @@ t_menu	*prepare_menu(t_philo data, int i, pthread_mutex_t *pm, t_list *ml)
 
 int	make_philosophers(t_list **ml, t_philo data, pthread_mutex_t *pm)
 {
-	pthread_t temp;
-	t_menu	*menu;
-	int i;
+	pthread_t	temp;
+	t_menu		*menu;
+	int			i;
 
 	i = 0;
-	while(i < data.nphils)
+	while (i < data.nphils)
 	{
 		menu = prepare_menu(data, i + 1, pm, *ml);
 		ft_lstadd_back(ml, ft_lstnew(menu));
 		if (pthread_create(&temp, NULL, &philosopher, (void *)menu))
-		 	return (ft_err("Thread creation failed.\n"));
+			return (ft_err("Thread creation failed.\n"));
 		if (wake_philo(menu))
 			return (ft_err("Could not get time of the day.\n"));
 		pthread_detach(temp);
@@ -69,9 +69,9 @@ int	make_philosophers(t_list **ml, t_philo data, pthread_mutex_t *pm)
 
 void	monitor_philosophers(t_list *menulist, t_philo data)
 {
-	int i;
+	int	i;
 
-	while(1)
+	while (1)
 	{
 		myusleep(100);
 		if (!check_pulse(((t_menu *)menulist->content)->lasteat, data.die))
@@ -86,7 +86,7 @@ void	monitor_philosophers(t_list *menulist, t_philo data)
 	{
 		data.appetite = 0;
 		i = 0;
-		while(i < data.nphils)
+		while (i < data.nphils)
 		{
 			if (check_pulse(((t_menu *)menulist->content)->lasteat, data.die))
 				data.appetite++;

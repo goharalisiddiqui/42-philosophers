@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 12:46:01 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/26 22:03:02 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/29 21:07:59 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ long	ft_atol(char *str)
 	if ((sign == -1) && (ft_strncmp(str, "9223372036854775808", 20) == 0))
 		return (-9223372036854775807 - 1);
 	digits = ft_atol_digits(str);
-	if (digits < 0)	
+	if (digits < 0)
 	{
 		if (sign == 1)
 			return (-1);

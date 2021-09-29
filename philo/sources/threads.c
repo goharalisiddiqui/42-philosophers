@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 20:34:52 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/29 20:42:34 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 21:12:12 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	abstain(t_menu *m)
 	long	temp;
 
 	get_currtime(&temp);
-	temp = ((m->info.die/2) * 1000) - (temp - m->lasteat);
+	temp = ((m->info.die / 2) * 1000) - (temp - m->lasteat);
 	if (temp > 0 && m->hand == right)
 		myusleep(temp);
 }
@@ -47,21 +47,21 @@ void	*philosopher(void *menu)
 
 	i = 0;
 	m = (t_menu *)menu;
-	while(*(m->info.epoch) == 0)
+	while (*(m->info.epoch) == 0)
 		usleep(1);
-	while(1)
+	while (1)
 	{
 		abstain(m);
 		eat(m);
 		if (m->info.appetite > 0 && ++i == m->info.appetite)
 		{
 			display_message(menu, TYPE_OVER);
-			break;
+			break ;
 		}
 		display_message(m, TYPE_SLEEP);
 		mysleep(m->info.sleep);
 		display_message(m, TYPE_THINK);
 	}
-	while(1)
+	while (1)
 		usleep(INT_MAX);
 }

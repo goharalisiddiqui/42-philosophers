@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 19:41:24 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/29 16:44:32 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 21:13:14 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_currtime(long *time)
 {
-	struct timeval temp;
+	struct timeval	temp;
 
 	if (gettimeofday(&temp, NULL))
 		return (1);
@@ -40,22 +40,22 @@ int	check_pulse(long lasteat, long die)
 	return (1);
 }
 
-void myusleep(long usec)
+void	myusleep(long usec)
 {
-	long start;
-	long end;
+	long	start;
+	long	end;
 
 	get_currtime(&start);
 	while (1)
 	{
 		usleep(10);
-	 	get_currtime(&end);
-	 	if ((end - start) >= usec)
-	 		break;
+		get_currtime(&end);
+		if ((end - start) >= usec)
+			break ;
 	}
 }
 
-void mysleep(long msec)
+void	mysleep(long msec)
 {
 	myusleep(msec * 1000);
 }

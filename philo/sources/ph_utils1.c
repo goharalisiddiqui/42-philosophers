@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 20:04:08 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/29 20:56:19 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 21:10:24 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_putendl_fd(char *s, int fd)
 	}
 }
 
-int		ft_isnum(char *str)
+int	ft_isnum(char *str)
 {
 	while (str && *str)
 	{
@@ -54,34 +54,4 @@ int	ft_strlen(char *str)
 		str++;
 	}
 	return (size);
-}
-
-void	ft_putnbr_fd(long n, int fd)
-{
-	long		i;
-
-	i = 1;
-	if (n == LONG_MIN)
-	{
-		ft_putstr_fd("-9223372036854775807", fd);
-		return ;
-	}
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		n *= -1;
-	}
-	if (n > 9)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
-	else
-		ft_putchar_fd(n + '0', fd);
-}
-
-int 	ft_err(char *str)
-{
-	write(STDERR_FILENO, str, ft_strlen(str));
-	return (1);
 }

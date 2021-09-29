@@ -1,39 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_funcs.c                                    :+:      :+:    :+:   */
+/*   ph_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/29 20:57:26 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/29 21:06:49 by gsiddiqu         ###   ########.fr       */
+/*   Created: 2021/09/29 21:09:28 by gsiddiqu          #+#    #+#             */
+/*   Updated: 2021/09/29 21:10:36 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philo.h"
 
-void	destroy_menu(t_menu *menu)
+void	ft_putnbr_fd(long n, int fd)
 {
-	pthread_mutex_destroy(menu->left_fork);
-	free(menu->left_fork);
-	menu->left_fork = NULL;
+	long		i;
+
+	i = 1;
+	if (n == LONG_MIN)
+	{
+		ft_putstr_fd("-9223372036854775807", fd);
+		return ;
+	}
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		n *= -1;
+	}
+	if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
+	else
+		ft_putchar_fd(n + '0', fd);
 }
 
-void	destroy_data(t_philo data, t_list **menulist)
+int	ft_err(char *str)
 {
-	int		i;
-	t_list	*temp;
-
-	i = 0;
-	free(data.epoch);
-	temp = *menulist;
-	while (i < data.nphils)
-	{
-		destroy_menu((t_menu *)(temp->content));
-		i++;
-		if (i == data.nphils)
-			temp->next = NULL;
-		temp = temp->next;
-	}
-	ft_lstclear(menulist, free);
+	write(STDERR_FILENO, str, ft_strlen(str));
+	return (1);
 }
