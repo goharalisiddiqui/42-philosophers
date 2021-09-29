@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -pthread -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -pthread 
 SDIR = sources
 ODIR = objects
 HDIR = headers
