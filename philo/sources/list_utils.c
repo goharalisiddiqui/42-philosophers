@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 15:34:48 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/27 16:13:11 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 20:42:05 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		*lst = new;
 }
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
-{
-	(*new).next = *lst;
-	*lst = new;
-}
-
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*buff;
@@ -45,15 +39,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	lst = NULL;
 }
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	while (lst != NULL)
-	{
-		f((*lst).content);
-		lst = (*lst).next;
-	}
-}
-
 t_list	*ft_lstnew(void *content)
 {
 	t_list	*elem;
@@ -64,19 +49,6 @@ t_list	*ft_lstnew(void *content)
 	(*elem).content = content;
 	(*elem).next = NULL;
 	return (elem);
-}
-
-int	ft_lstsize(t_list *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst != NULL)
-	{
-		i++;
-		lst = (*lst).next;
-	}
-	return (i);
 }
 
 t_list	*ft_lstlast(t_list *lst)

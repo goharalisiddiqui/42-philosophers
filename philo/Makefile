@@ -1,11 +1,11 @@
 CC = gcc
-CFLAGS = -g -pthread #-Wall -Wextra -Werror 
+CFLAGS = -g -pthread -Wall -Wextra -Werror 
 SDIR = sources
 ODIR = objects
 HDIR = headers
 NAME = philo
 SRC = ph_main.c ph_argcheck.c ph_utils1.c ft_atol.c list_utils.c time_funcs.c \
-		display_message.c
+		display_message.c threads.c destroy_funcs.c setup_funcs.c
 
 $(NAME): $(foreach file,$(SRC:.c=.o),$(ODIR)/$(file))
 	$(CC) $(CFLAGS) -o $@ $(foreach src,$(SRC:.c=.o),$(ODIR)/$(src))

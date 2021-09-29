@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ph_utils1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gohar <gohar@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 20:04:08 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/28 21:11:23 by gohar            ###   ########.fr       */
+/*   Updated: 2021/09/29 20:56:19 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,10 @@ void	ft_putnbr_fd(long n, int fd)
 	}
 	else
 		ft_putchar_fd(n + '0', fd);
+}
+
+int 	ft_err(char *str)
+{
+	write(STDERR_FILENO, str, ft_strlen(str));
+	return (1);
 }

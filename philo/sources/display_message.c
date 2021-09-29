@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 20:46:19 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/29 16:45:53 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 20:33:46 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,22 @@ static char	*get_message(int type)
 
 void	display_message(t_menu *menu, int type)
 {
+	static	int done = 0;
 	long	currtime;
 
 	pthread_mutex_lock(menu->print_mutex);
-	get_currtime(&currtime);
-	//printf("ctime=%ld\n", currtime);
-	ft_putnbr_fd((currtime - *(menu->info.epoch))/1000, STDOUT_FILENO);
-	write(1, " ", 1);
-	ft_putnbr_fd(menu->nphil, STDOUT_FILENO);
-	write(1, get_message(type), ft_strlen(get_message(type)));
-	if (type != TYPE_DIE)
-		pthread_mutex_unlock(menu->print_mutex);
+	if (!done)
+	{
+		get_currtime(&currtime);
+		ft_putnbr_fd((currtime - *(menu->info.epoch))/1000, STDOUT_FILENO);
+		write(1, " ", 1);
+		ft_putnbr_fd(menu->nphil, STDOUT_FILENO);
+		write(1, get_message(type), ft_strlen(get_message(type)));
+		if (type != TYPE_DIE)
+			pthread_mutex_unlock(menu->print_mutex);
+		else
+			done = 1;
+	}
+	else
+		mysleep(INT_MAX);
 }
