@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 20:59:52 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/29 21:11:40 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 22:08:59 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ t_menu	*prepare_menu(t_philo data, int i, pthread_mutex_t *pm, t_list *ml)
 		menu->right_fork = make_fork();
 	else
 		menu->right_fork = right_fork;
-	if (i == data.nphils)
+	if (i == data.nphils && data.nphils > 1)
 		menu->left_fork = ((t_menu *)(ml->content))->right_fork;
-	else
+	else if (data.nphils > 1)
 		menu->left_fork = make_fork();
+	else 
+		menu->left_fork = menu->right_fork;
 	right_fork = menu->left_fork;
 	menu->print_mutex = pm;
 	if (i % 2 == 0)

@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:32:20 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/29 21:08:43 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/29 22:11:14 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ int	ph_argcheck(int argc, char **argv, t_philo *data)
 		*temp = ft_atol(argv[ind]);
 		temp += 1;
 	}
+	if (data->nphils == 0)
+		return (ft_err("No philosophers to play.\n"));
 	return (0);
 }
