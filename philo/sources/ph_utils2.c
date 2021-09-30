@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 21:09:28 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/29 21:10:36 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:52:26 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_putnbr_fd(long n, int fd)
 {
-	long		i;
-
-	i = 1;
 	if (n == LONG_MIN)
 	{
 		ft_putstr_fd("-9223372036854775807", fd);

@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 20:59:52 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/29 22:13:08 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/30 17:53:32 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	make_philosophers(t_list **ml, t_philo data, pthread_mutex_t *pm)
 		ft_lstadd_back(ml, ft_lstnew(menu));
 		if (pthread_create(&temp, NULL, &philosopher, (void *)menu))
 			return (ft_err("Thread creation failed.\n"));
-		if (wake_philo(menu))
-			return (ft_err("Could not get time of the day.\n"));
 		pthread_detach(temp);
 		i++;
 	}

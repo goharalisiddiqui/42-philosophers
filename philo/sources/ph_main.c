@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 17:31:26 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/29 21:08:50 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:52:31 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ int	main(int argc, char **argv)
 	t_list			*menulist;
 	t_philo			data;
 	pthread_mutex_t	*pmutex;
-	int				i;
 
 	if (ph_argcheck(argc, argv, &data))
 		return (1);
 	pmutex = make_fork();
-	i = 0;
 	menulist = NULL;
 	data.epoch = malloc(sizeof(long));
 	*(data.epoch) = 0;
