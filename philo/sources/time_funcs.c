@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 19:41:24 by gohar             #+#    #+#             */
-/*   Updated: 2021/09/30 18:19:23 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/09/30 19:04:04 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	myusleep(long usec)
 		get_currtime(&end);
 		if ((end - start) >= usec)
 			break ;
+		usleep(500);
 	}
 }
 
