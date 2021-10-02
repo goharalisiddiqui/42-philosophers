@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 20:59:52 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/30 17:53:32 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/10/02 21:54:44 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_menu	*prepare_menu(t_philo data, int i, pthread_mutex_t *pm, t_list *ml)
 	menu = malloc(sizeof(t_menu));
 	menu->info = data;
 	menu->nphil = i;
+	menu->eatcount = 0;
 	if (i == 1)
 		menu->right_fork = make_fork();
 	else
@@ -69,29 +70,23 @@ int	make_philosophers(t_list **ml, t_philo data, pthread_mutex_t *pm)
 
 void	monitor_philosophers(t_list *menulist, t_philo data)
 {
-	int	i;
+	int	served;
 
-	while (1)
+	served = 0;
+	while (served < data.nphils)
 	{
-		myusleep(100);
+		myusleep(50);
 		if (!check_pulse(((t_menu *)menulist->content)->lasteat, data.die))
 		{
-			if (data.appetite == 0)
+			if (data.appetite == 0
+				|| ((t_menu *)menulist->content)->eatcount != data.appetite)
+			{
 				display_message((t_menu *)menulist->content, TYPE_DIE);
-			break ;
+				break ;
+			}
+			else
+				served++;
 		}
 		menulist = menulist->next;
-	}
-	while (data.appetite != 0)
-	{
-		data.appetite = 0;
-		i = 0;
-		while (i < data.nphils)
-		{
-			if (check_pulse(((t_menu *)menulist->content)->lasteat, data.die))
-				data.appetite++;
-			i++;
-			menulist = menulist->next;
-		}
 	}
 }

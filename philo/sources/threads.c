@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 20:34:52 by gsiddiqu          #+#    #+#             */
-/*   Updated: 2021/09/30 18:20:45 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/10/02 21:46:55 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	eat(t_menu *m)
 	get_currtime(&(m->lasteat));
 	display_message(m, TYPE_EAT);
 	mysleep(m->info.eat);
+	m->eatcount++;
 	pthread_mutex_unlock(m->right_fork);
 	pthread_mutex_unlock(m->left_fork);
 }
@@ -44,9 +45,7 @@ void	eat(t_menu *m)
 void	*philosopher(void *menu)
 {
 	t_menu	*m;
-	long	i;
 
-	i = 0;
 	m = (t_menu *)menu;
 	while (*(m->info.epoch) == 0)
 		usleep(1);
@@ -56,7 +55,7 @@ void	*philosopher(void *menu)
 	while (1)
 	{
 		eat(m);
-		if (m->info.appetite > 0 && ++i == m->info.appetite)
+		if (m->info.appetite > 0 && m->eatcount == m->info.appetite)
 		{
 			display_message(menu, TYPE_OVER);
 			break ;

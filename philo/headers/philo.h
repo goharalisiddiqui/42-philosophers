@@ -6,7 +6,7 @@
 /*   By: gsiddiqu <gsiddiqu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 13:22:57 by edavid            #+#    #+#             */
-/*   Updated: 2021/09/30 18:20:34 by gsiddiqu         ###   ########.fr       */
+/*   Updated: 2021/10/02 21:45:33 by gsiddiqu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_menu
 	enum e_handedness	hand;
 	long				lasteat;
 	t_philo				info;
+	int					eatcount;
 }	t_menu;
 
 // Function declarations
